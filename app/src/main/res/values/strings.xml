@@ -6,4 +6,8 @@
     <string name="email">Email</string>
     <string name="login">Login</string>
     <string name="dont_have_an_account">Don\'t have an account?<b> Sign up</b></string>
+    <string name="full_name">Full Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="i_have_an_account_login">I have an account.<b> Login</b></string>
 </resources>
