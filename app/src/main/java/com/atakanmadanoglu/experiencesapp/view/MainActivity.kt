@@ -1,7 +1,8 @@
-package com.atakanmadanoglu.experiencesapp
+package com.atakanmadanoglu.experiencesapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.atakanmadanoglu.experiencesapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
