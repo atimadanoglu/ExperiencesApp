@@ -37,5 +37,19 @@
         android:id="@+id/homePageFragment"
         android:name="com.atakanmadanoglu.experiencesapp.view.HomePageFragment"
         android:label="fragment_home_page"
-        tools:layout="@layout/fragment_home_page" />
+        tools:layout="@layout/fragment_home_page" >
+        <action
+            android:id="@+id/action_homePageFragment_to_addExperienceFragment"
+            app:destination="@id/addExperienceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExperienceFragment"
+        android:name="com.atakanmadanoglu.experiencesapp.view.AddExperienceFragment"
+        android:label="AddExperienceFragment" >
+        <action
+            android:id="@+id/action_addExperienceFragment_to_homePageFragment"
+            app:destination="@id/homePageFragment"
+            app:popUpTo="@id/addExperienceFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
