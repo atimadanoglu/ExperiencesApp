@@ -1,12 +1,12 @@
 package com.atakanmadanoglu.experiencesapp.view
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.atakanmadanoglu.experiencesapp.R
 import com.atakanmadanoglu.experiencesapp.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
@@ -36,9 +36,9 @@ class LoginFragment : Fragment() {
 
     private fun loginButtonClickListener() {
         binding.loginButton.setOnClickListener {
-            val action = LoginFragmentDirections
-                .actionLoginFragmentToHomePageFragment()
-            findNavController().navigate(action)
+            val intent = Intent(requireContext(), HomePageActivity::class.java)
+            startActivity(intent)
+            activity?.finish()
         }
     }
 }

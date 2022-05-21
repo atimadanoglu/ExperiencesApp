@@ -13,11 +13,6 @@
         <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_homePageFragment"
-            app:destination="@id/homePageFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -27,29 +22,5 @@
         <action
             android:id="@+id/action_signUpFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_signUpFragment_to_homePageFragment"
-            app:destination="@id/homePageFragment"
-            app:popUpTo="@id/signUpFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/homePageFragment"
-        android:name="com.atakanmadanoglu.experiencesapp.view.HomePageFragment"
-        android:label="fragment_home_page"
-        tools:layout="@layout/fragment_home_page" >
-        <action
-            android:id="@+id/action_homePageFragment_to_addExperienceFragment"
-            app:destination="@id/addExperienceFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/addExperienceFragment"
-        android:name="com.atakanmadanoglu.experiencesapp.view.AddExperienceFragment"
-        android:label="AddExperienceFragment" >
-        <action
-            android:id="@+id/action_addExperienceFragment_to_homePageFragment"
-            app:destination="@id/homePageFragment"
-            app:popUpTo="@id/addExperienceFragment"
-            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

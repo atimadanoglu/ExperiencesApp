@@ -12,18 +12,9 @@
         android:layout_height="match_parent"
         tools:context=".view.AddExperienceFragment">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/experience_image_view"
