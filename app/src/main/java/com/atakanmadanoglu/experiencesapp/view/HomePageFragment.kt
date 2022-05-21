@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.atakanmadanoglu.experiencesapp.R
@@ -36,7 +37,9 @@ class HomePageFragment : Fragment() {
     }
 
     private fun setToolbar() {
+        val searchView = requireActivity().findViewById<SearchView>(R.id.home_page_search_view)
+        searchView.visibility = View.VISIBLE
         val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
-        toolbar.title = "Experiences"
+        toolbar.setTitle(R.string.home_page_experiences)
     }
 }

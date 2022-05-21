@@ -18,4 +18,6 @@
     <string name="home">Home</string>
     <string name="future_visits">Future Visits</string>
     <string name="add_experience">Add Experience</string>
+    <string name="home_page_experiences">Experiences</string>
+    <string name="places_i_want_to_go">Places I Want to Go</string>
 </resources>

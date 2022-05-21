@@ -28,7 +28,7 @@ class AddExperienceFragment : Fragment() {
 
     private fun setToolbar() {
         val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
-        toolbar.title = "Add Experience"
+        toolbar.setTitle(R.string.add_experience)
         val searchView = requireActivity().findViewById<SearchView>(R.id.home_page_search_view)
         searchView.visibility = View.GONE
     }

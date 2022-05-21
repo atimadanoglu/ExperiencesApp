@@ -28,9 +28,9 @@ class FutureVisitsFragment : Fragment() {
 
     private fun setToolbar() {
         val searchView = requireActivity().findViewById<SearchView>(R.id.home_page_search_view)
-        searchView.visibility = View.GONE
+        searchView.visibility = View.VISIBLE
         val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
-        toolbar.title = "Places I Want to Go"
+        toolbar.setTitle(R.string.places_i_want_to_go)
     }
 
 }
