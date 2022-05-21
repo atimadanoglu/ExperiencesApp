@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_page_nav_graph"
+    app:startDestination="@id/homePageFragment">
+
+    <fragment
+        android:id="@+id/homePageFragment"
+        android:name="com.atakanmadanoglu.experiencesapp.view.HomePageFragment"
+        android:label="HomePageFragment" >
+        <action
+            android:id="@+id/action_homePageFragment_to_addExperienceFragment"
+            app:destination="@id/addExperienceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addExperienceFragment"
+        android:name="com.atakanmadanoglu.experiencesapp.view.AddExperienceFragment"
+        android:label="AddExperienceFragment" >
+        <action
+            android:id="@+id/action_addExperienceFragment_to_homePageFragment2"
+            app:destination="@id/homePageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/futureVisitsFragment"
+        android:name="com.atakanmadanoglu.experiencesapp.view.FutureVisitsFragment"
+        android:label="FutureVisitsFragment" />
+</navigation>
