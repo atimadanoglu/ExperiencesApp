@@ -15,6 +15,8 @@ import java.sql.Timestamp
 data class Picture(
     @PrimaryKey(autoGenerate = false)
     val id: String = "",
+    @ColumnInfo(name = "experience_id")
+    val experienceID: String,
     @ColumnInfo(name = "picture_byte_array")
     val pictureByteArray: ByteArray? = null,
     @ColumnInfo(name = "added_at")

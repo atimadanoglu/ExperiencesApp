@@ -9,14 +9,14 @@ import java.sql.Timestamp
 @Entity(
     tableName = "experiences_table",
     foreignKeys = [
-        ForeignKey(entity = User::class, parentColumns = ["id"], childColumns = ["user_id"])
+        ForeignKey(entity = User::class, parentColumns = ["email"], childColumns = ["user_email"])
     ]
 )
 data class Experience(
     @PrimaryKey(autoGenerate = false)
     val id: String = "",
-    @ColumnInfo(name = "user_id")
-    val userID: String = "",
+    @ColumnInfo(name = "user_email")
+    val userEmail: String = "",
     @ColumnInfo(name = "title")
     val title: String = "",
     @ColumnInfo(name = "comment")
