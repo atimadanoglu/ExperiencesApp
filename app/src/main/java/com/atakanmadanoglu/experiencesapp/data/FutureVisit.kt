@@ -1,19 +1,17 @@
 package com.atakanmadanoglu.experiencesapp.data
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(
     tableName = "future_visits_table",
     foreignKeys = [
         ForeignKey(entity = User::class, parentColumns = ["email"], childColumns = ["user_email"])
-    ]
+    ],
+    indices = [Index("user_email")]
 )
 data class FutureVisit(
     @PrimaryKey(autoGenerate = false)
-    val uuid: String,
+    val uuid: String = "",
     @ColumnInfo(name = "user_email")
     val userEmail: String = "",
     @ColumnInfo(name = "place_name")
