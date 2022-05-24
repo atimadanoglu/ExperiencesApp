@@ -20,4 +20,6 @@
     <string name="add_experience">Add Experience</string>
     <string name="home_page_experiences">Experiences</string>
     <string name="places_i_want_to_go">Places I Want to Go</string>
+    <string name="fill_in_the_blanks">Please fill in the blanks!</string>
+    <string name="passwords_dont_match">Passwords don\'t match!</string>
 </resources>
