@@ -11,22 +11,21 @@ import androidx.room.RoomDatabase
     version = 1,
     exportSchema = false
 )
-abstract class ExperiencesRoomDatabase: RoomDatabase() {
+abstract class ExperienceRoomDatabase: RoomDatabase() {
 
-    abstract fun experienceDao(): ExperienceDao
-    abstract fun pictureDao(): PictureDao
-    abstract fun userDao(): UserDao
-    abstract fun futureVisitsDao(): FutureVisitsDao
+    abstract val experienceDao: ExperienceDao
+    abstract val pictureDao: PictureDao
+    abstract val userDao: UserDao
+    abstract val futureVisitsDao: FutureVisitsDao
 
     companion object {
         @Volatile
-        private var INSTANCE: ExperiencesRoomDatabase? = null
-
-        fun getDatabase(context: Context): ExperiencesRoomDatabase {
+        private var INSTANCE: ExperienceRoomDatabase? = null
+        fun getDatabase(context: Context): ExperienceRoomDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    ExperiencesRoomDatabase::class.java,
+                    ExperienceRoomDatabase::class.java,
                     "experiences_database"
                 ).build()
                 INSTANCE = instance

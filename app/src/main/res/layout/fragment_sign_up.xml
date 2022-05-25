@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.atakanmadanoglu.experiencesapp.viewmodel.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +30,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_marginVertical="20dp"
+            android:layout_marginHorizontal="30dp"
             android:hint="@string/full_name"
             app:hintTextColor="@color/black"
             app:boxStrokeColor="@color/black"
@@ -40,6 +43,7 @@
                 android:id="@+id/full_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@={viewModel.fullName}"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,7 +52,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_marginVertical="20dp"
+            android:layout_marginHorizontal="30dp"
             android:hint="@string/email"
             app:hintTextColor="@color/black"
             app:boxStrokeColor="@color/black"
@@ -57,8 +62,10 @@
             app:layout_constraintTop_toBottomOf="@+id/full_name_layout">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@={viewModel.email}"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,7 +74,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_marginVertical="20dp"
+            android:layout_marginHorizontal="30dp"
             android:hint="@string/password"
             app:hintTextColor="@color/black"
             app:boxStrokeColor="@color/black"
@@ -79,6 +87,7 @@
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@={viewModel.password}"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -87,7 +96,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_marginVertical="20dp"
+            android:layout_marginHorizontal="30dp"
             android:hint="@string/confirm_password"
             app:hintTextColor="@color/black"
             app:boxStrokeColor="@color/black"
@@ -96,8 +106,10 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@={viewModel.confirmPassword}"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,6 +122,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
+            android:onClick="@{ () -> viewModel.insertUser()}"
             android:text="@string/sign_up"
             android:textSize="17sp"
             android:textColor="@color/black"
@@ -127,7 +140,6 @@
             android:text="@string/i_have_an_account_login"
             android:textSize="13sp"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sign_up_button" />

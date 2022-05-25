@@ -1,16 +1,14 @@
 package com.atakanmadanoglu.experiencesapp.data
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
-import java.sql.Timestamp
+import androidx.room.*
+import androidx.room.ForeignKey.CASCADE
 
 @Entity(
     tableName = "experiences_table",
     foreignKeys = [
-        ForeignKey(entity = User::class, parentColumns = ["email"], childColumns = ["user_email"])
-    ]
+        ForeignKey(entity = User::class, parentColumns = ["email"], childColumns = ["user_email"], onDelete = CASCADE)
+    ],
+    indices = [Index("user_email")]
 )
 data class Experience(
     @PrimaryKey(autoGenerate = false)
@@ -20,7 +18,5 @@ data class Experience(
     @ColumnInfo(name = "title")
     val title: String = "",
     @ColumnInfo(name = "comment")
-    val comment: String = "",
-    @ColumnInfo(name = "created_at")
-    val createdAt: Timestamp? = null
+    val comment: String = ""
 )
