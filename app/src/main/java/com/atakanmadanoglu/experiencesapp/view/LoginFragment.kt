@@ -1,5 +1,6 @@
 package com.atakanmadanoglu.experiencesapp.view
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,9 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.atakanmadanoglu.experiencesapp.ExperiencesApplication
+import com.atakanmadanoglu.experiencesapp.R
 import com.atakanmadanoglu.experiencesapp.databinding.FragmentLoginBinding
 import com.atakanmadanoglu.experiencesapp.viewmodel.LoginViewModel
 import com.atakanmadanoglu.experiencesapp.viewmodel.LoginViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 class LoginFragment : Fragment() {
 
@@ -32,19 +35,70 @@ class LoginFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         observeData()
         signUpTextClickListener()
-        loginButtonClickListener()
         return view
     }
 
+    private fun setSharedPreferences() {
+        val sharedPref = requireActivity()
+            .getSharedPreferences("userInformation", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.apply {
+            putString("email", viewModel.email.value)
+            putBoolean("isSignedIn", true)
+            apply()
+        }
+    }
+
     private fun observeData() {
-        viewModel.email.observe(viewLifecycleOwner) {
+        viewModel.user.observe(viewLifecycleOwner) {
+            if (it == null) {
+                Snackbar.make(
+                    requireView(),
+                    R.string.there_is_no_such_a_user,
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
             it?.let {
-                println("email: $it")
+                viewModel.setDoesExist()
             }
         }
-        viewModel.password.observe(viewLifecycleOwner) {
+        viewModel.doesExist.observe(viewLifecycleOwner) {
+            if (it == true) {
+                viewModel.retrieveAndCheckPassword()
+            } else {
+                Snackbar.make(
+                    requireView(),
+                    R.string.there_is_no_such_a_user,
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
+        viewModel.areEmptyOrNull.observe(viewLifecycleOwner) {
             it?.let {
-                println("password: $it")
+                if (it) {
+                    Snackbar.make(
+                        requireView(),
+                        R.string.fill_in_the_blanks,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+        viewModel.isPasswordCorrect.observe(viewLifecycleOwner) {
+            it?.let {
+                if (it) {
+                    setSharedPreferences()
+                    val intent = Intent(requireContext(), HomePageActivity::class.java)
+                    startActivity(intent)
+                    activity?.finish()
+                    viewModel.navigatedToHomePage()
+                } else {
+                    Snackbar.make(
+                        requireView(),
+                        R.string.wrong_password,
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
             }
         }
     }
@@ -54,14 +108,6 @@ class LoginFragment : Fragment() {
             val action = LoginFragmentDirections
                 .actionLoginFragmentToSignUpFragment()
             findNavController().navigate(action)
-        }
-    }
-
-    private fun loginButtonClickListener() {
-        binding.loginButton.setOnClickListener {
-            val intent = Intent(requireContext(), HomePageActivity::class.java)
-            startActivity(intent)
-            activity?.finish()
         }
     }
 }
