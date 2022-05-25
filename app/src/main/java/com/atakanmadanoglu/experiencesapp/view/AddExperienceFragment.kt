@@ -6,14 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.atakanmadanoglu.experiencesapp.ExperiencesApplication
 import com.atakanmadanoglu.experiencesapp.R
 import com.atakanmadanoglu.experiencesapp.databinding.FragmentAddExperienceBinding
+import com.atakanmadanoglu.experiencesapp.viewmodel.AddExperienceViewModel
+import com.atakanmadanoglu.experiencesapp.viewmodel.AddExperienceViewModelFactory
 import com.google.android.material.appbar.MaterialToolbar
 
 class AddExperienceFragment : Fragment() {
 
     private var _binding: FragmentAddExperienceBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: AddExperienceViewModel by viewModels {
+        AddExperienceViewModelFactory(
+            (requireActivity().application as ExperiencesApplication).experienceDao)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
