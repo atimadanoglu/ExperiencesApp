@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.atakanmadanoglu.experiencesapp.ExperiencesApplication
 import com.atakanmadanoglu.experiencesapp.R
 import com.atakanmadanoglu.experiencesapp.databinding.FragmentAddExperienceBinding
@@ -31,7 +32,16 @@ class AddExperienceFragment : Fragment() {
         _binding = FragmentAddExperienceBinding.inflate(inflater, container, false)
         val view = binding.root
         setToolbar()
+        goToMapsPageClickListener()
         return view
+    }
+
+    private fun goToMapsPageClickListener() {
+        binding.chooseLocationButton.setOnClickListener {
+            val action = AddExperienceFragmentDirections
+                .actionAddExperienceFragmentToMapsFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun setToolbar() {
@@ -40,5 +50,4 @@ class AddExperienceFragment : Fragment() {
         val searchView = requireActivity().findViewById<SearchView>(R.id.home_page_search_view)
         searchView.visibility = View.GONE
     }
-
 }
