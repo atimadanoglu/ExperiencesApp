@@ -1,10 +1,12 @@
 package com.atakanmadanoglu.experiencesapp.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -14,6 +16,7 @@ import com.atakanmadanoglu.experiencesapp.databinding.FragmentAddExperienceBindi
 import com.atakanmadanoglu.experiencesapp.viewmodel.AddExperienceViewModel
 import com.atakanmadanoglu.experiencesapp.viewmodel.AddExperienceViewModelFactory
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.snackbar.Snackbar
 
 class AddExperienceFragment : Fragment() {
 
@@ -42,6 +45,7 @@ class AddExperienceFragment : Fragment() {
         setEditTexts()
         goToMapsPageClickListener()
         observeValues()
+        addButtonClickListener()
     }
 
     private fun observeValues() {
@@ -79,10 +83,43 @@ class AddExperienceFragment : Fragment() {
         }
     }
 
+    private fun addButtonClickListener() {
+        binding.addButton.setOnClickListener {
+            if (viewModel.title.value.isNullOrEmpty())
+                binding.titleLayout.error = " "
+            if (viewModel.comments.value.isNullOrEmpty())
+                binding.commentLayout.error = " "
+            if (!binding.locationStatus.isVisible) {
+                Snackbar.make(
+                    requireView(),
+                    "Please choose a location!",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+            if (!viewModel.areTheyNull() && binding.locationStatus.isVisible) {
+                val sharedPref = requireActivity()
+                    .getSharedPreferences("userInformation", Context.MODE_PRIVATE)
+                val email = sharedPref.getString("email", "")
+                if (email != null) {
+                    viewModel.insert(email).also {
+                        val action = AddExperienceFragmentDirections
+                            .actionAddExperienceFragmentToHomePageFragment2()
+                        findNavController().navigate(action)
+                    }
+                }
+            }
+        }
+    }
+
     private fun setToolbar() {
         val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.setTitle(R.string.add_experience)
         val searchView = requireActivity().findViewById<SearchView>(R.id.home_page_search_view)
         searchView.visibility = View.GONE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.clearData()
     }
 }

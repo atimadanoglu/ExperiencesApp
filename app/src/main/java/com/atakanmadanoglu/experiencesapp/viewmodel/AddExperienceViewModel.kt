@@ -3,7 +3,11 @@ package com.atakanmadanoglu.experiencesapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.atakanmadanoglu.experiencesapp.data.Experience
 import com.atakanmadanoglu.experiencesapp.data.ExperienceDao
+import kotlinx.coroutines.launch
+import java.util.*
 
 class AddExperienceViewModel(private val experienceDao: ExperienceDao): ViewModel() {
 
@@ -36,7 +40,32 @@ class AddExperienceViewModel(private val experienceDao: ExperienceDao): ViewMode
         _navigate.postValue(true)
     }
 
+    fun insert(email: String) = viewModelScope.launch {
+        if (!areTheyNull()) {
+            val uuid = UUID.randomUUID()
+            val experience = Experience(
+                uuid.toString(),
+                email,
+                title.value!!,
+                comments.value!!,
+                _latitude.value!!,
+                _longitude.value!!
+            )
+            experienceDao.insert(experience)
+        }
+    }
+
     fun navigated() {
         _navigate.value = null
+    }
+
+    fun clearData() {
+        println("çağrıldı")
+        title.postValue(null)
+        comments.postValue(null)
+        _savedTitle.postValue(null)
+        _savedComments.postValue(null)
+        _latitude.postValue(null)
+        _longitude.postValue(null)
     }
 }

@@ -18,7 +18,9 @@
         android:label="AddExperienceFragment" >
         <action
             android:id="@+id/action_addExperienceFragment_to_homePageFragment2"
-            app:destination="@id/homePageFragment" />
+            app:destination="@id/homePageFragment"
+            app:popUpTo="@id/addExperienceFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_addExperienceFragment_to_mapsFragment"
             app:destination="@id/mapsFragment" />

@@ -9,9 +9,9 @@ import androidx.room.RoomDatabase
 @Database(
     entities = [User::class, Experience::class, FutureVisit::class, Picture::class],
     version = 1,
-    exportSchema = false
+    exportSchema = true
 )
-abstract class ExperienceRoomDatabase: RoomDatabase() {
+abstract class ExperiencesRoomDatabase: RoomDatabase() {
 
     abstract val experienceDao: ExperienceDao
     abstract val pictureDao: PictureDao
@@ -20,13 +20,13 @@ abstract class ExperienceRoomDatabase: RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: ExperienceRoomDatabase? = null
-        fun getDatabase(context: Context): ExperienceRoomDatabase {
+        private var INSTANCE: ExperiencesRoomDatabase? = null
+        fun getDatabase(context: Context): ExperiencesRoomDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    ExperienceRoomDatabase::class.java,
-                    "experiences_database"
+                    ExperiencesRoomDatabase::class.java,
+                    "all_experiences_database"
                 ).build()
                 INSTANCE = instance
                 instance

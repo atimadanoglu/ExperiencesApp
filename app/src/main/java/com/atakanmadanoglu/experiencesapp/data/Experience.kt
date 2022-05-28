@@ -18,5 +18,9 @@ data class Experience(
     @ColumnInfo(name = "title")
     val title: String = "",
     @ColumnInfo(name = "comment")
-    val comment: String = ""
+    val comment: String = "",
+    @ColumnInfo(name = "latitude")
+    val latitude: Double = 0.0,
+    @ColumnInfo(name = "longitude")
+    val longitude: Double = 0.0
 )
