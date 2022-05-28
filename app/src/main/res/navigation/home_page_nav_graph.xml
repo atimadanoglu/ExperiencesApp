@@ -33,6 +33,8 @@
         android:label="MapsFragment" >
         <action
             android:id="@+id/action_mapsFragment_to_addExperienceFragment"
-            app:destination="@id/addExperienceFragment" />
+            app:destination="@id/addExperienceFragment"
+            app:popUpTo="@id/mapsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

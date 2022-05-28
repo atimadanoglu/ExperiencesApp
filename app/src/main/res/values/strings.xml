@@ -24,4 +24,7 @@
     <string name="passwords_dont_match">Passwords don\'t match!</string>
     <string name="there_is_no_such_a_user">There is no such a user!</string>
     <string name="wrong_password">Wrong Password!</string>
+    <string name="save">Save</string>
+    <string name="location_status">Location Status</string>
+    <string name="location_chosen">Location is chosen</string>
 </resources>

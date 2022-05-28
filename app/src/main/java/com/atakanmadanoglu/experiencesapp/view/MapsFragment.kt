@@ -14,9 +14,12 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.atakanmadanoglu.experiencesapp.ExperiencesApplication
 import com.atakanmadanoglu.experiencesapp.databinding.FragmentMapsBinding
-import com.atakanmadanoglu.experiencesapp.viewmodel.MapsViewModel
+import com.atakanmadanoglu.experiencesapp.viewmodel.AddExperienceViewModel
+import com.atakanmadanoglu.experiencesapp.viewmodel.AddExperienceViewModelFactory
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -35,14 +38,16 @@ class MapsFragment : Fragment() {
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private lateinit var sharedPref: SharedPreferences
     private var trackBoolean: Boolean? = null
-    private val viewModel: MapsViewModel by viewModels()
+    private val viewModel: AddExperienceViewModel by activityViewModels {
+        AddExperienceViewModelFactory(
+            (requireActivity().application as ExperiencesApplication).experienceDao)
+    }
 
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
         mapLongClickListener(googleMap)
 
         /*mapLongClickListener(googleMap)*/
-
         locationManager = requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager
         locationListener = LocationListener { p0 ->
             trackBoolean = sharedPref.getBoolean("trackBoolean", false)
@@ -79,7 +84,8 @@ class MapsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = binding.map.getFragment() as SupportMapFragment
         mapFragment.getMapAsync(callback)
-
+        saveButtonClickListener()
+        observeValues()
         registerLauncher()
         sharedPref = requireActivity().getSharedPreferences("maps", Context.MODE_PRIVATE)
         trackBoolean = false
@@ -112,6 +118,32 @@ class MapsFragment : Fragment() {
                     ).show()
                 }
             }
+        }
+    }
+
+    private fun observeValues() {
+        viewModel.latitude.observe(viewLifecycleOwner) {
+            it?.let {
+                if (it != 0.0) {
+                    binding.saveButton.isEnabled = true
+                }
+            }
+        }
+        viewModel.longitude.observe(viewLifecycleOwner) {
+            it?.let {
+                if (it != 0.0) {
+                    binding.saveButton.isEnabled = true
+                }
+            }
+        }
+    }
+
+
+
+    private fun saveButtonClickListener() {
+        binding.saveButton.setOnClickListener {
+            val action = MapsFragmentDirections.actionMapsFragmentToAddExperienceFragment()
+            findNavController().navigate(action)
         }
     }
 
