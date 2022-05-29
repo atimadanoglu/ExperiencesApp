@@ -19,5 +19,5 @@ data class FutureVisit(
     @ColumnInfo(name = "priority_rate")
     val priorityRate: String = "",
     @ColumnInfo(name = "isDone")
-    val isDone: Boolean = false
+    var isDone: Boolean = false
 )

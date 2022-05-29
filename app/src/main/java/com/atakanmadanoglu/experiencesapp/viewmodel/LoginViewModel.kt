@@ -11,6 +11,8 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(private val userDao: UserDao): ViewModel() {
 
+    private val ioDispatcher = Dispatchers.IO
+
     val email = MutableLiveData("")
     val password = MutableLiveData("")
 
@@ -33,7 +35,7 @@ class LoginViewModel(private val userDao: UserDao): ViewModel() {
                 || password.value.isNullOrEmpty())
     }
 
-    fun retrieveUser() = viewModelScope.launch(Dispatchers.IO) {
+    fun retrieveUser() = viewModelScope.launch(ioDispatcher) {
         setAreEmptyOrNull()
         email.value?.let {
             if (it.isNotEmpty())

@@ -3,8 +3,10 @@ package com.atakanmadanoglu.experiencesapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.atakanmadanoglu.experiencesapp.data.FutureVisit
 import com.atakanmadanoglu.experiencesapp.data.FutureVisitsDao
+import kotlinx.coroutines.launch
 
 class FutureVisitsViewModel(
     private val futureVisitsDao: FutureVisitsDao,
@@ -16,20 +18,19 @@ class FutureVisitsViewModel(
     private val _futureVisit = MutableLiveData<FutureVisit>()
     val futureVisit: LiveData<FutureVisit> get() = _futureVisit
 
-    private val _futureVisitID = MutableLiveData<Int>()
-    val futureVisitID: LiveData<Int> get() = _futureVisitID
-
     private val _futureVisitDoneStatus = MutableLiveData<Boolean>()
     val futureVisitDoneStatus: LiveData<Boolean> get() = _futureVisitDoneStatus
 
-    private val _navigate = MutableLiveData<Boolean?>()
-    val navigate: LiveData<Boolean?> get() = _navigate
-
-    fun setValues(id: Int, isChecked: Boolean) {
-        _futureVisitID.value = id
-        _futureVisitDoneStatus.value = isChecked
-        _navigate.value = true
+    fun setValues(futureVisit: FutureVisit, isChecked: Boolean) {
+        _futureVisit.postValue(futureVisit)
+        _futureVisitDoneStatus.postValue(isChecked)
     }
 
-    fun navigated() { _navigate.value = null }
+    fun updateDoneStatus() = viewModelScope.launch {
+        val copyOfFutureVisit = _futureVisit.value
+        copyOfFutureVisit?.isDone = _futureVisitDoneStatus.value!!
+        if (copyOfFutureVisit != null) {
+            futureVisitsDao.update(copyOfFutureVisit)
+        }
+    }
 }

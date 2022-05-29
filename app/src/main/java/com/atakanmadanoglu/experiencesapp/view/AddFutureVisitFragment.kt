@@ -100,6 +100,6 @@ class AddFutureVisitFragment : Fragment() {
         val searchView = requireActivity().findViewById<SearchView>(R.id.home_page_search_view)
         searchView.visibility = View.GONE
         val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
-        toolbar.setTitle(R.string.places_i_want_to_go)
+        toolbar.setTitle(R.string.add_future_visit)
     }
 }

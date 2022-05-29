@@ -53,8 +53,6 @@ class AddExperienceViewModel(
                 && _selectedPicture.value != null && _latitude.value != null && _longitude.value != null
             && imageBitmap.value != null
 
-
-
     fun insert(email: String) = viewModelScope.launch {
         if (isValid()) {
             val experience = Experience(

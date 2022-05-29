@@ -43,4 +43,6 @@
     <string name="low">LOW</string>
     <string name="choose_priority">Choose Priority</string>
     <string name="please_choose_priority_rate">Please choose a priority rate!</string>
+    <string name="add_future_visit">Add Place For Future Visit</string>
+    <string name="permission_needed_for_location">Permission needed for location!</string>
 </resources>

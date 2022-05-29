@@ -9,7 +9,7 @@ import com.atakanmadanoglu.experiencesapp.data.FutureVisit
 import com.atakanmadanoglu.experiencesapp.databinding.FutureVisitItemBinding
 
 class FutureVisitsAdapter(
-    private val clickListener: (id: Int, isChecked: Boolean) -> Unit
+    private val clickListener: (futureVisit: FutureVisit, isChecked: Boolean) -> Unit
 ): ListAdapter<FutureVisit, FutureVisitsAdapter.FutureVisitViewHolder>(FutureVisitDiffUtil()) {
     class FutureVisitViewHolder(private val binding: FutureVisitItemBinding): RecyclerView.ViewHolder(binding.root) {
         companion object {
@@ -19,10 +19,10 @@ class FutureVisitsAdapter(
                 return FutureVisitViewHolder(binding)
             }
         }
-        fun bind(futureVisit: FutureVisit, clickListener: (id: Int, isChecked: Boolean) -> Unit) {
+        fun bind(futureVisit: FutureVisit, clickListener: (futureVisit: FutureVisit, isChecked: Boolean) -> Unit) {
             binding.futureVisit = futureVisit
             binding.isDone.setOnCheckedChangeListener { _, b ->
-                clickListener(futureVisit.id, b)
+                clickListener(futureVisit, b)
             }
             binding.executePendingBindings()
         }

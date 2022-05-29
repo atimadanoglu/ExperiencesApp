@@ -45,6 +45,11 @@ class FutureVisitsFragment : Fragment() {
                 adapter.submitList(it)
             }
         }
+        viewModel.futureVisitDoneStatus.observe(viewLifecycleOwner) {
+            it?.let {
+                viewModel.updateDoneStatus()
+            }
+        }
     }
 
     private fun setViewModel() {
@@ -71,8 +76,8 @@ class FutureVisitsFragment : Fragment() {
     }
 
     private fun setAdapter() {
-        adapter = FutureVisitsAdapter { id, isChecked ->
-            viewModel.setValues(id, isChecked)
+        adapter = FutureVisitsAdapter { futureVisit, isChecked ->
+            viewModel.setValues(futureVisit, isChecked)
         }
         binding.futureVisitsRecyclerView.adapter = adapter
     }

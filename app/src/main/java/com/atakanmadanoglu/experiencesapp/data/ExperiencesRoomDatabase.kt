@@ -3,7 +3,6 @@ package com.atakanmadanoglu.experiencesapp.data
 import android.content.Context
 import androidx.room.*
 
-
 @Database(
     entities = [User::class, Experience::class, FutureVisit::class],
     version = 1,
@@ -24,7 +23,7 @@ abstract class ExperiencesRoomDatabase: RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     ExperiencesRoomDatabase::class.java,
-                    "experiences_db"
+                    "experiences_database"
                 ).build()
                 INSTANCE = instance
                 instance
