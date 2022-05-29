@@ -23,6 +23,7 @@ class FutureVisitsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: FutureVisitsAdapter
     private lateinit var viewModel: FutureVisitsViewModel
+    private lateinit var searchView: SearchView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,11 +37,18 @@ class FutureVisitsFragment : Fragment() {
         setAdapter()
         observeValues()
         goToAddFutureVisitFragmentClickListener()
+        searchElement()
         return view
     }
 
     private fun observeValues() {
         viewModel.list.observe(viewLifecycleOwner) {
+            it?.let {
+                //adapter.submitList(it)
+                viewModel.setCopyList(it)
+            }
+        }
+        viewModel.copyList.observe(viewLifecycleOwner) {
             it?.let {
                 adapter.submitList(it)
             }
@@ -83,9 +91,22 @@ class FutureVisitsFragment : Fragment() {
     }
 
     private fun setToolbar() {
-        val searchView = requireActivity().findViewById<SearchView>(R.id.home_page_search_view)
+        searchView = requireActivity().findViewById<SearchView>(R.id.home_page_search_view)
         searchView.visibility = View.VISIBLE
         val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.setTitle(R.string.places_i_want_to_go)
+    }
+
+    private fun searchElement() {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.filter(newText)
+                return true
+            }
+        })
     }
 }

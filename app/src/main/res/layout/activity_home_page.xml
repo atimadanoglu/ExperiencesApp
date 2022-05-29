@@ -11,7 +11,7 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.MainActivity">
+        tools:context=".view.HomePageActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -61,6 +61,7 @@
             android:background="@color/mainColor"
             app:itemTextColor="@color/black"
             app:itemIconTint="@color/black"
+            app:headerLayout="@layout/drawer_header"
             app:menu="@menu/navigation_view_menu" />
 
     </androidx.drawerlayout.widget.DrawerLayout>

@@ -1,5 +1,6 @@
 package com.atakanmadanoglu.experiencesapp.view
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -7,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.atakanmadanoglu.experiencesapp.databinding.ActivityHomePageBinding
+import com.atakanmadanoglu.experiencesapp.databinding.DrawerHeaderBinding
 
 class HomePageActivity : AppCompatActivity() {
 
@@ -19,6 +21,7 @@ class HomePageActivity : AppCompatActivity() {
         setContentView(view)
         setToolbar()
         setupNavigationView()
+        setDrawerHeader()
     }
 
    private fun setToolbar() {
@@ -35,4 +38,12 @@ class HomePageActivity : AppCompatActivity() {
        val navController = navHostFragment.navController
        NavigationUI.setupWithNavController(binding.navigationView, navController)
    }
+
+    private fun setDrawerHeader() {
+        val sharedPref = this.getSharedPreferences("userInformation", Context.MODE_PRIVATE)
+        val email = sharedPref.getString("email", "")
+        val header = binding.navigationView.getHeaderView(0)
+        val binding = DrawerHeaderBinding.bind(header)
+        binding.email.text = email
+    }
 }

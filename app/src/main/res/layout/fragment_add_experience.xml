@@ -24,7 +24,7 @@
                 android:layout_height="150dp"
                 android:layout_marginTop="20dp"
                 android:contentDescription="@string/todo"
-                android:src="@drawable/select_image"
+                android:src="@drawable/ic_launcher_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -73,6 +73,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:lines="10"
+                    android:gravity="top"
                     android:text="@={viewModel.comments}" />
 
             </com.google.android.material.textfield.TextInputLayout>
