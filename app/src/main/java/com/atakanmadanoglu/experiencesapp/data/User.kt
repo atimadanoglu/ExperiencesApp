@@ -13,5 +13,5 @@ data class User(
     @ColumnInfo(name = "password")
     val password: String = "",
     @ColumnInfo(name = "is_signed_in")
-    val isSignedIn: Boolean = false
+    var isSignedIn: Boolean = false
 )

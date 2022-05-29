@@ -61,6 +61,7 @@
             android:background="@color/mainColor"
             app:itemTextColor="@color/black"
             app:itemIconTint="@color/black"
+            app:headerLayout="@layout/drawer_header"
             app:menu="@menu/navigation_view_menu" />
 
     </androidx.drawerlayout.widget.DrawerLayout>

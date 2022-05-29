@@ -105,7 +105,6 @@ class FutureVisitsFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 viewModel.filter(newText)
-                println("serach ivew içi")
                 return true
             }
         })
