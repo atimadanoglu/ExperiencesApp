@@ -128,8 +128,12 @@ class AddExperienceFragment : Fragment() {
         binding.addButton.setOnClickListener {
             if (viewModel.title.value.isNullOrEmpty())
                 binding.titleLayout.error = " "
+            else
+                binding.titleLayout.error = null
             if (viewModel.comments.value.isNullOrEmpty())
                 binding.commentLayout.error = " "
+            else
+                binding.commentLayout.error = null
             if (!binding.locationStatus.isVisible) {
                 Snackbar.make(
                     requireView(),
@@ -137,7 +141,14 @@ class AddExperienceFragment : Fragment() {
                     Snackbar.LENGTH_LONG
                 ).show()
             }
-            if (!viewModel.areTheyNull() && binding.locationStatus.isVisible) {
+            if (viewModel.selectedPicture.value == null) {
+                Snackbar.make(
+                    requireView(),
+                    "Please add a picture!",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+            if (viewModel.isValid()) {
                 val sharedPref = requireActivity()
                     .getSharedPreferences("userInformation", Context.MODE_PRIVATE)
                 val email = sharedPref.getString("email", "")

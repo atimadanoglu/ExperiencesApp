@@ -43,6 +43,9 @@ class AddExperienceViewModel(
     private val _selectedPicture = MutableLiveData<Uri?>()
     val selectedPicture: LiveData<Uri?> get() = _selectedPicture
 
+    private val _enableButton = MutableLiveData<Boolean?>()
+    val enableButton: LiveData<Boolean?> get() = _enableButton
+
     fun setLatitude(value: Double) { _latitude.value = value }
     fun setLongitude(value: Double) { _longitude.value = value }
     fun setImageBitmap(value: Bitmap) { imageBitmap.postValue(value) }
@@ -54,6 +57,11 @@ class AddExperienceViewModel(
         _savedComments.postValue(comments.value)
         _navigate.postValue(true)
     }
+
+    fun isValid() = !title.value.isNullOrEmpty() && !comments.value.isNullOrEmpty()
+                && _selectedPicture.value != null && _latitude.value != null && _longitude.value != null
+
+
 
     fun insert(email: String) = viewModelScope.launch {
         if (!areTheyNull()) {
