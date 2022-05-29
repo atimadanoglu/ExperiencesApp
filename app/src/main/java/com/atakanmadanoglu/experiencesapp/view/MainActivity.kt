@@ -16,10 +16,10 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         val sharedPref = getSharedPreferences("userInformation", Context.MODE_PRIVATE)
-        sharedPref.edit().apply {
+        /*sharedPref.edit().apply {
             putBoolean("isSignedIn", false)
             apply()
-        }
+        }*/
         val isSignedIn = sharedPref.getBoolean("isSignedIn", false)
         if (isSignedIn) {
             val intent = Intent(this, HomePageActivity::class.java)
