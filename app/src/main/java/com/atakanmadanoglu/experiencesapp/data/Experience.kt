@@ -4,11 +4,7 @@ import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 
 @Entity(
-    tableName = "experiences_table",
-    foreignKeys = [
-        ForeignKey(entity = User::class, parentColumns = ["email"], childColumns = ["user_email"], onDelete = CASCADE)
-    ],
-    indices = [Index("user_email")]
+    tableName = "experiences_table"
 )
 data class Experience(
     @PrimaryKey(autoGenerate = false)

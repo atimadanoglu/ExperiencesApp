@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "0d2fe50dbb924d8781c1ab9ca7ddbd28",
+    "version": 3,
+    "identityHash": "612e85bc57b84709eb34a0a05313649c",
     "entities": [
       {
         "tableName": "users_table",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "experiences_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_email` TEXT NOT NULL, `title` TEXT NOT NULL, `comment` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`user_email`) REFERENCES `users_table`(`email`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_email` TEXT NOT NULL, `title` TEXT NOT NULL, `comment` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -89,30 +89,8 @@
           ],
           "autoGenerate": false
         },
-        "indices": [
-          {
-            "name": "index_experiences_table_user_email",
-            "unique": false,
-            "columnNames": [
-              "user_email"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_experiences_table_user_email` ON `${TABLE_NAME}` (`user_email`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "users_table",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "user_email"
-            ],
-            "referencedColumns": [
-              "email"
-            ]
-          }
-        ]
+        "indices": [],
+        "foreignKeys": []
       },
       {
         "tableName": "future_visits_table",
@@ -228,7 +206,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0d2fe50dbb924d8781c1ab9ca7ddbd28')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '612e85bc57b84709eb34a0a05313649c')"
     ]
   }
 }

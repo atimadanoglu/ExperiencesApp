@@ -1,15 +1,30 @@
 package com.atakanmadanoglu.experiencesapp.view
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import coil.ImageLoader
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import com.atakanmadanoglu.experiencesapp.ExperiencesApplication
 import com.atakanmadanoglu.experiencesapp.R
 import com.atakanmadanoglu.experiencesapp.databinding.FragmentAddExperienceBinding
@@ -17,6 +32,7 @@ import com.atakanmadanoglu.experiencesapp.viewmodel.AddExperienceViewModel
 import com.atakanmadanoglu.experiencesapp.viewmodel.AddExperienceViewModelFactory
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 class AddExperienceFragment : Fragment() {
 
@@ -24,8 +40,13 @@ class AddExperienceFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: AddExperienceViewModel by activityViewModels {
         AddExperienceViewModelFactory(
-            (requireActivity().application as ExperiencesApplication).experienceDao)
+            (requireActivity().application as ExperiencesApplication).experienceDao,
+            (requireActivity().application as ExperiencesApplication).pictureDao
+        )
     }
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var permissionLauncher: ActivityResultLauncher<String>
+    private var selectedPicture : Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +57,7 @@ class AddExperienceFragment : Fragment() {
         val view = binding.root
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        registerLauncher()
         setToolbar()
         return view
     }
@@ -46,6 +68,7 @@ class AddExperienceFragment : Fragment() {
         goToMapsPageClickListener()
         observeValues()
         addButtonClickListener()
+        selectImageButtonClickListener()
     }
 
     private fun observeValues() {
@@ -66,6 +89,24 @@ class AddExperienceFragment : Fragment() {
                     binding.locationStatus.visibility = View.VISIBLE
                     binding.locationStatus.setText(R.string.location_chosen)
                 }
+            }
+        }
+        viewModel.selectedPicture.observe(viewLifecycleOwner) {
+            it?.let {
+                binding.experienceImageView.setImageURI(it)
+                getBitmap(it)
+            }
+        }
+    }
+
+    private fun getBitmap(uri: Uri) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val loading = ImageLoader(requireContext())
+            val request = ImageRequest.Builder(requireContext())
+                .data(uri)
+                .build()
+            (loading.execute(request) as SuccessResult).drawable.also {
+                viewModel.setImageBitmap((it as BitmapDrawable).bitmap)
             }
         }
     }
@@ -92,7 +133,7 @@ class AddExperienceFragment : Fragment() {
             if (!binding.locationStatus.isVisible) {
                 Snackbar.make(
                     requireView(),
-                    "Please choose a location!",
+                    R.string.please_choose_location,
                     Snackbar.LENGTH_LONG
                 ).show()
             }
@@ -107,6 +148,51 @@ class AddExperienceFragment : Fragment() {
                         findNavController().navigate(action)
                     }
                 }
+            }
+        }
+    }
+
+    private fun selectImageButtonClickListener() {
+        binding.experienceImageView.setOnClickListener {
+            if (ContextCompat
+                    .checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    Snackbar.make(requireView(), R.string.permission_needed_for_gallery, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.give_permission) {
+                            permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        }.show()
+                } else {
+                    permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                }
+            }else {
+                val intentToGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                activityResultLauncher.launch(intentToGallery)
+            }
+        }
+    }
+
+    private fun registerLauncher() {
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val intentFromResult = result.data
+                if (intentFromResult != null) {
+                    selectedPicture = intentFromResult.data
+                    viewModel.setSelectedPicture(selectedPicture)
+                }
+            }
+        }
+
+        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
+            if (result) {
+                // permission granted
+                val intentToGallery = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                activityResultLauncher.launch(intentToGallery)
+            } else {
+                Toast.makeText(this.context, R.string.permission_needed_for_gallery, Toast.LENGTH_LONG).show()
             }
         }
     }
