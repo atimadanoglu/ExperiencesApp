@@ -1,5 +1,6 @@
 package com.atakanmadanoglu.experiencesapp.view
 
+import android.annotation.SuppressLint
 import android.app.Service.LOCATION_SERVICE
 import android.content.Context
 import android.content.SharedPreferences
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.atakanmadanoglu.experiencesapp.ExperiencesApplication
+import com.atakanmadanoglu.experiencesapp.R
 import com.atakanmadanoglu.experiencesapp.databinding.FragmentMapsBinding
 import com.atakanmadanoglu.experiencesapp.viewmodel.AddExperienceViewModel
 import com.atakanmadanoglu.experiencesapp.viewmodel.AddExperienceViewModelFactory
@@ -44,11 +46,11 @@ class MapsFragment : Fragment() {
         )
     }
 
+    @SuppressLint("MissingPermission")
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
         mapLongClickListener(googleMap)
 
-        /*mapLongClickListener(googleMap)*/
         locationManager = requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager
         locationListener = LocationListener { p0 ->
             trackBoolean = sharedPref.getBoolean("trackBoolean", false)
@@ -62,9 +64,9 @@ class MapsFragment : Fragment() {
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Snackbar.make(
                 requireView(),
-                "Permission needed for location",
+                R.string.permission_needed_for_location,
                 Snackbar.LENGTH_INDEFINITE
-            ).setAction("Give Permission") {
+            ).setAction(R.string.give_permission) {
                 permissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
             }.show()
         } else {
@@ -92,6 +94,7 @@ class MapsFragment : Fragment() {
         trackBoolean = false
     }
 
+    @SuppressLint("MissingPermission")
     private fun registerLauncher() {
         permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
             if (result) {

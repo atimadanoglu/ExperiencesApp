@@ -3,15 +3,11 @@ package com.atakanmadanoglu.experiencesapp.data
 import androidx.room.*
 
 @Entity(
-    tableName = "future_visits_table",
-    foreignKeys = [
-        ForeignKey(entity = User::class, parentColumns = ["email"], childColumns = ["user_email"])
-    ],
-    indices = [Index("user_email")]
+    tableName = "future_visits_table"
 )
 data class FutureVisit(
-    @PrimaryKey(autoGenerate = false)
-    val uuid: String = "",
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     @ColumnInfo(name = "user_email")
     val userEmail: String = "",
     @ColumnInfo(name = "place_name")
@@ -21,7 +17,7 @@ data class FutureVisit(
     @ColumnInfo(name = "district")
     val district: String = "",
     @ColumnInfo(name = "priority_rate")
-    val priorityRate: Int = 0,
+    val priorityRate: String = "",
     @ColumnInfo(name = "isDone")
-    val isDone: Boolean = false
+    var isDone: Boolean = false
 )

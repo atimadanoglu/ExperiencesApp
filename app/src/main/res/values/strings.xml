@@ -32,4 +32,17 @@
     <string name="give_permission">Give permission</string>
     <string name="please_add_picture">Please add a picture!</string>
     <string name="okay">Okay</string>
+    <string name="location_of_place">Location of Place</string>
+    <string name="priority">Priority</string>
+    <string name="done">Done</string>
+    <string name="place">%s / %s</string>
+    <string name="district">District</string>
+    <string name="city">City</string>
+    <string name="high">HIGH</string>
+    <string name="medium">MEDIUM</string>
+    <string name="low">LOW</string>
+    <string name="choose_priority">Choose Priority</string>
+    <string name="please_choose_priority_rate">Please choose a priority rate!</string>
+    <string name="add_future_visit">Add Place For Future Visit</string>
+    <string name="permission_needed_for_location">Permission needed for location!</string>
 </resources>

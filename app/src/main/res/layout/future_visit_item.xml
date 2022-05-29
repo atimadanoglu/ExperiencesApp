@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="futureVisit"
+            type="com.atakanmadanoglu.experiencesapp.data.FutureVisit" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/future_visit_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="10dp" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/place_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/place_name"
+                android:textSize="30sp"
+                android:text="@{futureVisit.placeName}"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/location_of_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/location_of_place"
+                android:textSize="20sp"
+                android:text="@{@string/place(futureVisit.city, futureVisit.district)}"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/place_name"
+                app:layout_constraintStart_toStartOf="@+id/place_name" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/priority"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/priority"
+                android:text="@{futureVisit.priorityRate}"
+                android:layout_marginStart="150dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintStart_toEndOf="@+id/place_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/is_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginEnd="30dp"
+                android:checked="@{futureVisit.done}"
+                android:text="@string/done"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+</layout>

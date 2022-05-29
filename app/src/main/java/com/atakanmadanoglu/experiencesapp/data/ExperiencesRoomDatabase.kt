@@ -3,7 +3,6 @@ package com.atakanmadanoglu.experiencesapp.data
 import android.content.Context
 import androidx.room.*
 
-
 @Database(
     entities = [User::class, Experience::class, FutureVisit::class],
     version = 1,
