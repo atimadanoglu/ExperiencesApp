@@ -18,10 +18,25 @@
         android:label="AddExperienceFragment" >
         <action
             android:id="@+id/action_addExperienceFragment_to_homePageFragment2"
-            app:destination="@id/homePageFragment" />
+            app:destination="@id/homePageFragment"
+            app:popUpTo="@id/addExperienceFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_addExperienceFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/futureVisitsFragment"
         android:name="com.atakanmadanoglu.experiencesapp.view.FutureVisitsFragment"
         android:label="FutureVisitsFragment" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.atakanmadanoglu.experiencesapp.view.MapsFragment"
+        android:label="MapsFragment" >
+        <action
+            android:id="@+id/action_mapsFragment_to_addExperienceFragment"
+            app:destination="@id/addExperienceFragment"
+            app:popUpTo="@id/mapsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

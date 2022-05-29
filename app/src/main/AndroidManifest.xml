@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.atakanmadanoglu.experiencesapp">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".ExperiencesApplication"
         android:allowBackup="true"
@@ -14,6 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExperiencesApp"
         tools:targetApi="31">
+        
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${GOOGLE_MAPS_API_KEY}"/>
+
         <activity
             android:name=".view.HomePageActivity"
             android:exported="false" />
