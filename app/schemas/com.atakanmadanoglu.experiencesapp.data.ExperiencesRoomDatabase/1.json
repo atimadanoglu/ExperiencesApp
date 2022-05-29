@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "619a40859701362445ed07a4b2e27d0a",
+    "identityHash": "c75136d88599c53e1460541d59e2ca57",
     "entities": [
       {
         "tableName": "users_table",
@@ -100,12 +100,12 @@
       },
       {
         "tableName": "future_visits_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `user_email` TEXT NOT NULL, `place_name` TEXT NOT NULL, `city` TEXT NOT NULL, `district` TEXT NOT NULL, `priority_rate` INTEGER NOT NULL, `isDone` INTEGER NOT NULL, PRIMARY KEY(`uuid`), FOREIGN KEY(`user_email`) REFERENCES `users_table`(`email`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_email` TEXT NOT NULL, `place_name` TEXT NOT NULL, `city` TEXT NOT NULL, `district` TEXT NOT NULL, `priority_rate` TEXT NOT NULL, `isDone` INTEGER NOT NULL)",
         "fields": [
           {
-            "fieldPath": "uuid",
-            "columnName": "uuid",
-            "affinity": "TEXT",
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -135,7 +135,7 @@
           {
             "fieldPath": "priorityRate",
             "columnName": "priority_rate",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -147,40 +147,18 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "uuid"
+            "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
-        "indices": [
-          {
-            "name": "index_future_visits_table_user_email",
-            "unique": false,
-            "columnNames": [
-              "user_email"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_future_visits_table_user_email` ON `${TABLE_NAME}` (`user_email`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "users_table",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "user_email"
-            ],
-            "referencedColumns": [
-              "email"
-            ]
-          }
-        ]
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '619a40859701362445ed07a4b2e27d0a')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c75136d88599c53e1460541d59e2ca57')"
     ]
   }
 }

@@ -31,7 +31,11 @@
     <fragment
         android:id="@+id/futureVisitsFragment"
         android:name="com.atakanmadanoglu.experiencesapp.view.FutureVisitsFragment"
-        android:label="FutureVisitsFragment" />
+        android:label="FutureVisitsFragment" >
+        <action
+            android:id="@+id/action_futureVisitsFragment_to_addFutureVisitFragment"
+            app:destination="@id/addFutureVisitFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.atakanmadanoglu.experiencesapp.view.MapsFragment"
@@ -49,5 +53,13 @@
         <action
             android:id="@+id/action_experienceDetailsFragment_to_homePageFragment"
             app:destination="@id/homePageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addFutureVisitFragment"
+        android:name="com.atakanmadanoglu.experiencesapp.view.AddFutureVisitFragment"
+        android:label="AddFutureVisitFragment" >
+        <action
+            android:id="@+id/action_addFutureVisitFragment_to_futureVisitsFragment"
+            app:destination="@id/futureVisitsFragment" />
     </fragment>
 </navigation>

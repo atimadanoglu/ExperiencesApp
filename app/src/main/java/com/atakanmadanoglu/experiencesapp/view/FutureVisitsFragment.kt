@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.atakanmadanoglu.experiencesapp.ExperiencesApplication
 import com.atakanmadanoglu.experiencesapp.R
 import com.atakanmadanoglu.experiencesapp.adapter.FutureVisitsAdapter
@@ -30,10 +31,11 @@ class FutureVisitsFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentFutureVisitsBinding.inflate(inflater, container, false)
         val view = binding.root
+        setViewModel()
         setToolbar()
         setAdapter()
-        setViewModel()
         observeValues()
+        goToAddFutureVisitFragmentClickListener()
         return view
     }
 
@@ -50,13 +52,21 @@ class FutureVisitsFragment : Fragment() {
             requireActivity().getSharedPreferences("userInformation", Context.MODE_PRIVATE)
         val email = sharedPref.getString("email", "")
         email?.let {
-            val homeViewModel: FutureVisitsViewModel by activityViewModels {
+            val futureVisitsViewModel: FutureVisitsViewModel by activityViewModels {
                 FutureVisitsViewModelFactory(
                     (requireActivity().application as ExperiencesApplication).futureVisitDao,
                     it
                 )
             }
-            viewModel = homeViewModel
+            viewModel = futureVisitsViewModel
+        }
+    }
+
+    private fun goToAddFutureVisitFragmentClickListener() {
+        binding.floatingActionButton.setOnClickListener {
+            val action = FutureVisitsFragmentDirections
+                .actionFutureVisitsFragmentToAddFutureVisitFragment()
+            findNavController().navigate(action)
         }
     }
 
