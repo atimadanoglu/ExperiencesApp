@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey
     tableName = "experiences_table"
 )
 data class Experience(
-    @PrimaryKey(autoGenerate = false)
-    val id: String = "",
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     @ColumnInfo(name = "user_email")
     val userEmail: String = "",
     @ColumnInfo(name = "title")

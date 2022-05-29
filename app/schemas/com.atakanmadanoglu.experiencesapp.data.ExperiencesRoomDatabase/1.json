@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b0ce3c64f92392efbda7246a1aa671d4",
+    "identityHash": "619a40859701362445ed07a4b2e27d0a",
     "entities": [
       {
         "tableName": "users_table",
@@ -44,12 +44,12 @@
       },
       {
         "tableName": "experiences_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_email` TEXT NOT NULL, `title` TEXT NOT NULL, `comment` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `picture_bitmap` BLOB, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_email` TEXT NOT NULL, `title` TEXT NOT NULL, `comment` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `picture_bitmap` BLOB)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -93,7 +93,7 @@
           "columnNames": [
             "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -180,7 +180,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b0ce3c64f92392efbda7246a1aa671d4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '619a40859701362445ed07a4b2e27d0a')"
     ]
   }
 }

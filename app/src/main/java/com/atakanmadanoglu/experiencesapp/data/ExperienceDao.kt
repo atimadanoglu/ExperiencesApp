@@ -15,7 +15,7 @@ interface ExperienceDao {
     @Delete
     suspend fun delete(experience: Experience)
 
-    @Query("SELECT * FROM experiences_table WHERE user_email = :email")
+    @Query("SELECT * FROM experiences_table WHERE user_email = :email ORDER BY id DESC")
     fun retrieveExperiences(email: String): LiveData<List<Experience>>
 
 }

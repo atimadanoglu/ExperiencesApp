@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.atakanmadanoglu.experiencesapp.data.Experience
 import com.atakanmadanoglu.experiencesapp.data.ExperienceDao
 import kotlinx.coroutines.launch
-import java.util.*
 
 class AddExperienceViewModel(
     private val experienceDao: ExperienceDao
@@ -20,8 +19,6 @@ class AddExperienceViewModel(
 
     private val _navigate = MutableLiveData<Boolean?>()
     val navigate: LiveData<Boolean?> get() = _navigate
-
-    private lateinit var experienceID: String
 
     private val imageBitmap = MutableLiveData<Bitmap?>()
 
@@ -39,9 +36,6 @@ class AddExperienceViewModel(
 
     private val _selectedPicture = MutableLiveData<Uri?>()
     val selectedPicture: LiveData<Uri?> get() = _selectedPicture
-
-    private val _enableButton = MutableLiveData<Boolean?>()
-    val enableButton: LiveData<Boolean?> get() = _enableButton
 
     fun setLatitude(value: Double) { _latitude.value = value }
     fun setLongitude(value: Double) { _longitude.value = value }
@@ -63,15 +57,13 @@ class AddExperienceViewModel(
 
     fun insert(email: String) = viewModelScope.launch {
         if (isValid()) {
-            experienceID = UUID.randomUUID().toString()
             val experience = Experience(
-                experienceID,
-                email,
-                title.value!!,
-                comments.value!!,
-                _latitude.value!!,
-                _longitude.value!!,
-                imageBitmap.value!!
+                userEmail = email,
+                title = title.value!!,
+                comment = comments.value!!,
+                latitude = _latitude.value!!,
+                longitude = _longitude.value!!,
+                pictureBitmap = imageBitmap.value!!
             )
             experienceDao.insert(experience)
         }
