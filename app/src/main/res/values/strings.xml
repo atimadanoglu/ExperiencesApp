@@ -30,4 +30,6 @@
     <string name="please_choose_location">Please choose a location!</string>
     <string name="permission_needed_for_gallery">Permission needed for gallery!</string>
     <string name="give_permission">Give permission</string>
+    <string name="please_add_picture">Please add a picture!</string>
+    <string name="okay">Okay</string>
 </resources>

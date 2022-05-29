@@ -8,14 +8,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.atakanmadanoglu.experiencesapp.data.Experience
 import com.atakanmadanoglu.experiencesapp.data.ExperienceDao
-import com.atakanmadanoglu.experiencesapp.data.Picture
-import com.atakanmadanoglu.experiencesapp.data.PictureDao
 import kotlinx.coroutines.launch
-import java.util.*
 
 class AddExperienceViewModel(
-    private val experienceDao: ExperienceDao,
-    private val pictureDao: PictureDao
+    private val experienceDao: ExperienceDao
 ): ViewModel() {
 
     val title = MutableLiveData("")
@@ -23,8 +19,6 @@ class AddExperienceViewModel(
 
     private val _navigate = MutableLiveData<Boolean?>()
     val navigate: LiveData<Boolean?> get() = _navigate
-
-    private lateinit var experienceID: String
 
     private val imageBitmap = MutableLiveData<Bitmap?>()
 
@@ -43,9 +37,6 @@ class AddExperienceViewModel(
     private val _selectedPicture = MutableLiveData<Uri?>()
     val selectedPicture: LiveData<Uri?> get() = _selectedPicture
 
-    private val _enableButton = MutableLiveData<Boolean?>()
-    val enableButton: LiveData<Boolean?> get() = _enableButton
-
     fun setLatitude(value: Double) { _latitude.value = value }
     fun setLongitude(value: Double) { _longitude.value = value }
     fun setImageBitmap(value: Bitmap) { imageBitmap.postValue(value) }
@@ -60,36 +51,21 @@ class AddExperienceViewModel(
 
     fun isValid() = !title.value.isNullOrEmpty() && !comments.value.isNullOrEmpty()
                 && _selectedPicture.value != null && _latitude.value != null && _longitude.value != null
+            && imageBitmap.value != null
 
 
 
     fun insert(email: String) = viewModelScope.launch {
-        if (!areTheyNull()) {
-            experienceID = UUID.randomUUID().toString()
+        if (isValid()) {
             val experience = Experience(
-                experienceID,
-                email,
-                title.value!!,
-                comments.value!!,
-                _latitude.value!!,
-                _longitude.value!!
+                userEmail = email,
+                title = title.value!!,
+                comment = comments.value!!,
+                latitude = _latitude.value!!,
+                longitude = _longitude.value!!,
+                pictureBitmap = imageBitmap.value!!
             )
             experienceDao.insert(experience)
-            insertImage()
-        }
-    }
-
-    private fun insertImage() = viewModelScope.launch {
-        _selectedPicture.value?.let {
-            imageBitmap.value?.let { bitmap ->
-                val uuid = UUID.randomUUID()
-                val picture = Picture(
-                    uuid.toString(),
-                    experienceID,
-                    bitmap
-                )
-                pictureDao.insert(picture)
-            }
         }
     }
 

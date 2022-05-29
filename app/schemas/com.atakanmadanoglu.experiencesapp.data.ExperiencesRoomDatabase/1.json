@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "587ce236a0cf9f9c4c6666e22ae991e2",
+    "identityHash": "619a40859701362445ed07a4b2e27d0a",
     "entities": [
       {
         "tableName": "users_table",
@@ -44,12 +44,12 @@
       },
       {
         "tableName": "experiences_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_email` TEXT NOT NULL, `title` TEXT NOT NULL, `comment` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`user_email`) REFERENCES `users_table`(`email`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_email` TEXT NOT NULL, `title` TEXT NOT NULL, `comment` TEXT NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `picture_bitmap` BLOB)",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -81,38 +81,22 @@
             "columnName": "longitude",
             "affinity": "REAL",
             "notNull": true
+          },
+          {
+            "fieldPath": "pictureBitmap",
+            "columnName": "picture_bitmap",
+            "affinity": "BLOB",
+            "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
             "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
-        "indices": [
-          {
-            "name": "index_experiences_table_user_email",
-            "unique": false,
-            "columnNames": [
-              "user_email"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_experiences_table_user_email` ON `${TABLE_NAME}` (`user_email`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "users_table",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "user_email"
-            ],
-            "referencedColumns": [
-              "email"
-            ]
-          }
-        ]
+        "indices": [],
+        "foreignKeys": []
       },
       {
         "tableName": "future_visits_table",
@@ -191,66 +175,12 @@
             ]
           }
         ]
-      },
-      {
-        "tableName": "pictures_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `experience_id` TEXT NOT NULL, `picture_byte_array` BLOB, PRIMARY KEY(`id`), FOREIGN KEY(`experience_id`) REFERENCES `experiences_table`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "experienceID",
-            "columnName": "experience_id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "pictureByteArray",
-            "columnName": "picture_byte_array",
-            "affinity": "BLOB",
-            "notNull": false
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [
-          {
-            "name": "index_pictures_table_experience_id",
-            "unique": false,
-            "columnNames": [
-              "experience_id"
-            ],
-            "orders": [],
-            "createSql": "CREATE INDEX IF NOT EXISTS `index_pictures_table_experience_id` ON `${TABLE_NAME}` (`experience_id`)"
-          }
-        ],
-        "foreignKeys": [
-          {
-            "table": "experiences_table",
-            "onDelete": "NO ACTION",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "experience_id"
-            ],
-            "referencedColumns": [
-              "id"
-            ]
-          }
-        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '587ce236a0cf9f9c4c6666e22ae991e2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '619a40859701362445ed07a4b2e27d0a')"
     ]
   }
 }

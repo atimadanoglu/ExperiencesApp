@@ -4,13 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.atakanmadanoglu.experiencesapp.data.ExperienceDao
 
-class AddExperienceViewModelFactory(
-    private val experienceDao: ExperienceDao
+class HomeViewModelFactory(
+    private val experienceDao: ExperienceDao,
+    private val email: String
 ): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AddExperienceViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return AddExperienceViewModel(experienceDao) as T
+            return HomeViewModel(experienceDao, email) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

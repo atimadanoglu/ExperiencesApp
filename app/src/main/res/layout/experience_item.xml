@@ -9,6 +9,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         app:cardCornerRadius="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,8 +18,8 @@
 
             <ImageView
                 android:id="@+id/item_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
                 android:src="@drawable/ic_launcher_background"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -26,10 +27,12 @@
                 android:contentDescription="@string/todo" />
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/place_name"
                 android:textSize="20sp"
+                android:gravity="center"
                 android:textColor="@color/black"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"

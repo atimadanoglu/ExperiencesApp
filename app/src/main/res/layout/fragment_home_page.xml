@@ -19,6 +19,7 @@
             android:layout_marginTop="?attr/actionBarSize">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_anchor="@+id/constraint_layout"
@@ -26,6 +27,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/experience_item" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
