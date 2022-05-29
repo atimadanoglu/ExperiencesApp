@@ -40,8 +40,7 @@ class AddExperienceFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: AddExperienceViewModel by activityViewModels {
         AddExperienceViewModelFactory(
-            (requireActivity().application as ExperiencesApplication).experienceDao,
-            (requireActivity().application as ExperiencesApplication).pictureDao
+            (requireActivity().application as ExperiencesApplication).experienceDao
         )
     }
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
@@ -144,7 +143,7 @@ class AddExperienceFragment : Fragment() {
             if (viewModel.selectedPicture.value == null) {
                 Snackbar.make(
                     requireView(),
-                    "Please add a picture!",
+                    R.string.please_add_picture,
                     Snackbar.LENGTH_LONG
                 ).show()
             }

@@ -8,14 +8,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.atakanmadanoglu.experiencesapp.data.Experience
 import com.atakanmadanoglu.experiencesapp.data.ExperienceDao
-import com.atakanmadanoglu.experiencesapp.data.Picture
-import com.atakanmadanoglu.experiencesapp.data.PictureDao
 import kotlinx.coroutines.launch
 import java.util.*
 
 class AddExperienceViewModel(
-    private val experienceDao: ExperienceDao,
-    private val pictureDao: PictureDao
+    private val experienceDao: ExperienceDao
 ): ViewModel() {
 
     val title = MutableLiveData("")
@@ -60,11 +57,12 @@ class AddExperienceViewModel(
 
     fun isValid() = !title.value.isNullOrEmpty() && !comments.value.isNullOrEmpty()
                 && _selectedPicture.value != null && _latitude.value != null && _longitude.value != null
+            && imageBitmap.value != null
 
 
 
     fun insert(email: String) = viewModelScope.launch {
-        if (!areTheyNull()) {
+        if (isValid()) {
             experienceID = UUID.randomUUID().toString()
             val experience = Experience(
                 experienceID,
@@ -72,24 +70,10 @@ class AddExperienceViewModel(
                 title.value!!,
                 comments.value!!,
                 _latitude.value!!,
-                _longitude.value!!
+                _longitude.value!!,
+                imageBitmap.value!!
             )
             experienceDao.insert(experience)
-            insertImage()
-        }
-    }
-
-    private fun insertImage() = viewModelScope.launch {
-        _selectedPicture.value?.let {
-            imageBitmap.value?.let { bitmap ->
-                val uuid = UUID.randomUUID()
-                val picture = Picture(
-                    uuid.toString(),
-                    experienceID,
-                    bitmap
-                )
-                pictureDao.insert(picture)
-            }
         }
     }
 

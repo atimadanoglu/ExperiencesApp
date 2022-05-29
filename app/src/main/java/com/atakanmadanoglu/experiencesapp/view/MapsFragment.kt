@@ -40,8 +40,7 @@ class MapsFragment : Fragment() {
     private var trackBoolean: Boolean? = null
     private val viewModel: AddExperienceViewModel by activityViewModels {
         AddExperienceViewModelFactory(
-            (requireActivity().application as ExperiencesApplication).experienceDao,
-            (requireActivity().application as ExperiencesApplication).pictureDao
+            (requireActivity().application as ExperiencesApplication).experienceDao
         )
     }
 

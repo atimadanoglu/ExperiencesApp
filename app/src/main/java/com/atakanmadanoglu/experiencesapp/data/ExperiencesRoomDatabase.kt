@@ -5,20 +5,14 @@ import androidx.room.*
 
 
 @Database(
-    entities = [User::class, Experience::class, FutureVisit::class, Picture::class],
-    version = 4,
-    autoMigrations = [
-        AutoMigration(from = 1, to = 2),
-        AutoMigration(from = 2, to = 3),
-        AutoMigration(from = 3, to = 4)
-    ],
+    entities = [User::class, Experience::class, FutureVisit::class],
+    version = 1,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class ExperiencesRoomDatabase: RoomDatabase() {
 
     abstract val experienceDao: ExperienceDao
-    abstract val pictureDao: PictureDao
     abstract val userDao: UserDao
     abstract val futureVisitsDao: FutureVisitsDao
 
@@ -30,7 +24,7 @@ abstract class ExperiencesRoomDatabase: RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     ExperiencesRoomDatabase::class.java,
-                    "all_experiences_database"
+                    "experiences_db"
                 ).build()
                 INSTANCE = instance
                 instance
