@@ -79,7 +79,10 @@ class HomePageFragment : Fragment() {
     private fun observeValues() {
         viewModel.navigate.observe(viewLifecycleOwner) {
             it?.let {
-
+                val action = HomePageFragmentDirections
+                    .actionHomePageFragmentToExperienceDetailsFragment()
+                findNavController().navigate(action)
+                viewModel.navigated()
             }
         }
         viewModel.list.observe(viewLifecycleOwner) {
