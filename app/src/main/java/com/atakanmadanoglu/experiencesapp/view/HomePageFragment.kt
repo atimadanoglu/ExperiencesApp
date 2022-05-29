@@ -23,6 +23,7 @@ class HomePageFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: HomePageAdapter
     private lateinit var viewModel: HomeViewModel
+    private lateinit var searchView: SearchView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +37,7 @@ class HomePageFragment : Fragment() {
         setAdapter()
         setToolbar()
         fabClickListener()
+        searchElement()
         return view
     }
 
@@ -62,7 +64,7 @@ class HomePageFragment : Fragment() {
     }
 
     private fun setToolbar() {
-        val searchView = requireActivity().findViewById<SearchView>(R.id.home_page_search_view)
+        searchView = requireActivity().findViewById(R.id.home_page_search_view)
         searchView.visibility = View.VISIBLE
         val toolbar = requireActivity().findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.setTitle(R.string.home_page_experiences)
@@ -87,9 +89,25 @@ class HomePageFragment : Fragment() {
         }
         viewModel.list.observe(viewLifecycleOwner) {
             it?.let {
-                println("size ${it.size}")
+                viewModel.setCopyList(it)
+            }
+        }
+        viewModel.copyList.observe(viewLifecycleOwner) {
+            it?.let {
                 adapter.submitList(it)
             }
         }
+    }
+    private fun searchElement() {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.filter(newText)
+                return true
+            }
+        })
     }
 }

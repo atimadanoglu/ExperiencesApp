@@ -52,9 +52,9 @@ class FutureVisitsViewModel(
     }
 
     private fun contains(newText: String?, futureVisit: FutureVisit): Boolean {
-        return newText?.let { futureVisit.placeName.contains(it) } == true ||
-                newText?.let { futureVisit.city.contains(it) } == true ||
-                newText?.let { futureVisit.district.contains(it) } == true
+        return newText?.let { futureVisit.placeName.contains(it, true) } == true ||
+                newText?.let { futureVisit.city.contains(it, true) } == true ||
+                newText?.let { futureVisit.district.contains(it, true) } == true
     }
 
 

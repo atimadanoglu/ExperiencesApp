@@ -13,6 +13,13 @@ class HomeViewModel(
 
     val list = experienceDao.retrieveExperiences(email)
 
+    private val _copyList = MutableLiveData<List<Experience>>()
+    val copyList: LiveData<List<Experience>> get() = _copyList
+
+    fun setCopyList(value: List<Experience>) {
+        _copyList.value = value
+    }
+
     private val _experience = MutableLiveData<Experience>()
     val experience: LiveData<Experience> get() = _experience
 
@@ -25,4 +32,21 @@ class HomeViewModel(
     }
 
     fun navigated() { _navigate.value = null }
+
+    fun filter(newText: String?) {
+        val newList = list.value
+        if (newText.isNullOrEmpty()) {
+            _copyList.value = list.value
+        }
+        val filteredList = newList?.filter {
+            contains(newText, it)
+        }
+        filteredList?.let {
+            _copyList.value = it
+        }
+    }
+
+    private fun contains(newText: String?, experience: Experience): Boolean {
+        return newText?.let { experience.title.contains(it, true) } == true
+    }
 }
