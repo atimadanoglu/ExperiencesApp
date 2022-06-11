@@ -1,5 +1,4 @@
-
-# 🏘️Experiences App
+# 📝Experiences App
 
 <strong>Experiences app</strong> is an Android mobile application which is to save memories that people experience.
 
